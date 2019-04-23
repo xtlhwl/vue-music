@@ -11,7 +11,14 @@
 
 <script type="text/ecmascript-6">
     import BScroll from  'better-scroll'
+    import {addClass} from 'common/js/dom'
+
     export default {
+        data(){
+            return {
+                
+            }
+        },
         props:{
             loop:{
                 type: Boolean,
@@ -33,14 +40,41 @@
             }, 20);
         },
         methods:{
+                //初始化slider的宽度
             _setSliderWidth(){
-                this.children = this.$refs.sliderGroup.children
+                //获取slider,也就是轮播图的for循环div子容器
+                this.children = this.$refs.sliderGroup.children 
 
                 let width = 0
-                let SliderWidth =this.$refs.slider.clientWidth
+                //获取slider宽度
+                let sliderWidth = this.$refs.slider.clientWidth
+                const childernLength = this.children.length
+                console.log('轮播图数量为:'+childernLength)
+                for(let i=0; i< this.children.length; i++){
+                    
+                    let child = this.children[i]
+                    addClass(child,'slider-item')  //将样式分别加入每个轮播图
+                   
+                    child.style.width = sliderWidth + 'px'  //令单个轮播图的宽度等于slider的宽度
+                    width += sliderWidth  //轮播图的总长度，各个轮播图长度相加
+                }
+                if(this.loop){
+                    width += 2 *  sliderWidth   //这里分别加长了width，是因为better-scroll在this.children的基础上前面和后面重复再加了两个轮播图，为了可以无缝连接
+                }
+                this.$refs.sliderGroup.style.width = width + 'px'
             },
-            _initSlider(){
-
+            //初始化slider
+            _initSlider(){ 
+                this.slider = new BScroll(this.$refs.slider,{
+                    scrollX:true,
+                    scrollY:false,
+                    momentum:false,
+                    snap:true,
+                    snapLoop:this.loop,
+                    snapThreshold:0.3,
+                    snapSpeed:400,
+                    click:true
+                })
             }
         }
     }
