@@ -1,13 +1,67 @@
 <template>
-    <div>
-        推荐页面
+    <div class="recommend">
+        <div class="recommend-content">
+            <div class="slider-wrapper"> 
+
+            </div>
+            <div class="recommend-list">
+                <h1 class="list-title">热门歌单推荐</h1>
+                <ul>
+
+                </ul>
+            </div>
+        </div>
     </div>
 </template>
 <script>
+// import  { getRecommend } from 'api/recommend'
+import { getDiscList, getRecommend } from 'api/recommend'
+import { ERR_OK }  from 'api/config'
+import Slider from 'base/slider/slider'
+
 export default {
     
+    methods:{
+        _getRecommend() {
+            getRecommend().then((res) =>{
+                if(res.code === ERR_OK){
+                    console.log(res.data)
+
+                }
+            })
+        },
+        //  _getDiscList() {
+        //     getDiscList().then((res) => {
+        //         if(res.code === ERR_OK){
+        //             console.log(res.data)
+
+        //         }
+        //     })
+        // }
+    },
+    created() {
+        this._getRecommend()
+        // this._getDiscList()
+    },
 }
 </script>
 <style lang="stylus" scoped>
+.recommend
+    position fixed
+    width:100%
+    top: 88px
+    bottom: 0
+    .recommend-content
+        height: 100%
+        overflow: hidden 
+        .slider-wrapper
+            position: relative
+            width: 100%
+            overflow: hidden
+        .recommend-list
+            .list-title
+                height: 65px
+                line-height: 65px
+                text-align: center
 
 </style>
