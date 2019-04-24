@@ -5,6 +5,7 @@
             </slot>
         </div>
         <div class="dots">
+            <span class="dot" v-for="(item,index) in dots" :key="index" :class="{active:currentPageIndex === index}"></span>
         </div>
     </div>
 </template>
@@ -16,7 +17,8 @@
     export default {
         data(){
             return {
-                
+              dots:[],
+              currentPageIndex: 0  
             }
         },
         props:{
@@ -24,24 +26,39 @@
                 type: Boolean,
                 default: true
             },
-            autoPlay:{
+            autoPlay:{  //自动轮播开关
                 type: Boolean,
                 default: true
             },
-            interval:{
+            interval:{  //轮播定时器
                 type: Number,
                 default: 4000
             }
         },
-        mounted() {
+        mounted() {  //初始化
             setTimeout(() => {
                 this._setSliderWidth()
+                this._initDots()
                 this._initSlider()
+
+                if(this.autoPlay){
+                    this._play()
+                }
+                
             }, 20);
         },
         methods:{
+            _play() {
+                let pageIndex  = this.currentPageIndex + 1
+                if (this.loop) {  //如果他是轮播图，则再加1，因为我们在后面的轮播图加了两个图
+                    pageIndex  +=1
+                }
+                this.timer = setTimeout(() => {
+                    this.slider.goToPage(pageIndex,0,400)
+                },this.interval)
+            },
                 //初始化slider的宽度
-            _setSliderWidth(){
+            _setSliderWidth() {
                 //获取slider,也就是轮播图的for循环div子容器
                 this.children = this.$refs.sliderGroup.children 
 
@@ -64,7 +81,7 @@
                 this.$refs.sliderGroup.style.width = width + 'px'
             },
             //初始化slider
-            _initSlider(){ 
+            _initSlider() { 
                 this.slider = new BScroll(this.$refs.slider,{
                     scrollX:true,
                     scrollY:false,
@@ -75,6 +92,21 @@
                     snapSpeed:400,
                     click:true
                 })
+                this.slider.on('scrollEnd',() => {
+                    //Current 现在的
+                    let pageIndex = this.slider.getCurrentPage().pageX  //获取当前页面栈的实例
+                    if(this.loop){
+                        pageIndex -= 1
+                    }
+                    this.currentPageIndex = pageIndex
+                })
+            },
+            _initDots(){
+                console.log(this.children,"长度")
+                this.dots = new Array(this.children.length)
+            },
+            scrollEnd(){
+
             }
         }
     }
@@ -114,7 +146,7 @@
         width: 8px
         height: 8px
         border-radius: 50%
-        background: $color-text-l
+        background: $color-text-ll
         &.active
           width: 20px
           border-radius: 5px
