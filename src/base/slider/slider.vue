@@ -46,6 +46,14 @@
                 }
                 
             }, 20);
+
+            window.addEventListener('resize',()=>{
+                if(!this.slider){
+                    return
+                }
+                this._setSliderWidth(true)
+                this.slider.refresh()
+            })
         },
         methods:{
             _play() {
@@ -58,7 +66,7 @@
                 },this.interval)
             },
                 //初始化slider的宽度
-            _setSliderWidth() {
+            _setSliderWidth(isResize) {   //设置轮播图的宽度
                 //获取slider,也就是轮播图的for循环div子容器
                 this.children = this.$refs.sliderGroup.children 
 
@@ -75,7 +83,7 @@
                     child.style.width = sliderWidth + 'px'  //令单个轮播图的宽度等于slider的宽度
                     width += sliderWidth  //轮播图的总长度，各个轮播图长度相加
                 }
-                if(this.loop){
+                if(this.loop && !isResize){
                     width += 2 *  sliderWidth   //这里分别加长了width，是因为better-scroll在this.children的基础上前面和后面重复再加了两个轮播图，为了可以无缝连接
                 }
                 this.$refs.sliderGroup.style.width = width + 'px'
@@ -89,8 +97,7 @@
                     snap:true,
                     snapLoop:this.loop,
                     snapThreshold:0.3,
-                    snapSpeed:400,
-                    click:true
+                    snapSpeed:400
                 })
                 this.slider.on('scrollEnd',() => {
                     //Current 现在的
@@ -99,6 +106,12 @@
                         pageIndex -= 1
                     }
                     this.currentPageIndex = pageIndex
+                    //清除定时器轮播图滚动，之后再执行轮播器自动滚动
+                    if(this.autoPlay){
+                        clearTimeout(this.timer)
+                        this._play()
+                    }
+
                 })
             },
             _initDots(){
