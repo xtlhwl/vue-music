@@ -3,9 +3,9 @@
         <div class="recommend-content">
             <div v-if="recommends.length" class="slider-wrapper"> 
                 <slider>
-                    <div v-for="(item,index) in recommends" :key="index">
+                    <div v-for="(item,index) in recommends" :key="index" >
                         <a :href="item.linkUrl">
-                            <img :src="item.picUrl"></img>
+                            <img :src="item.picUrl" > </img>
                         </a>
                     </div>
                 </slider>

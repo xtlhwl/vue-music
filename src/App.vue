@@ -2,7 +2,10 @@
   <div id="app">
     <m-header></m-header>
     <tab></tab>
+    <keep-alive>
+      <!-- keep-alive切换页面不会导致重加载，节省资源 -->
     <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 

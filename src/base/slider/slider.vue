@@ -1,6 +1,6 @@
-<template>
+<template >
     <div class="slider" ref="slider">
-        <div class="slider-group" ref="sliderGroup">
+        <div class="slider-group" ref="sliderGroup" >
             <slot>
             </slot>
         </div>
@@ -22,7 +22,7 @@
             }
         },
         props:{
-            loop:{
+            loop:{  //是否是轮播图
                 type: Boolean,
                 default: true
             },
@@ -47,6 +47,7 @@
                 
             }, 20);
 
+            //当页面宽度发生变化
             window.addEventListener('resize',()=>{
                 if(!this.slider){
                     return
@@ -88,7 +89,8 @@
                 }
                 this.$refs.sliderGroup.style.width = width + 'px'
             },
-            //初始化slider
+
+            //初始化slider 轮播器
             _initSlider() { 
                 this.slider = new BScroll(this.$refs.slider,{
                     scrollX:true,
@@ -114,14 +116,16 @@
 
                 })
             },
+
             _initDots(){
-                console.log(this.children,"长度")
+                // console.log(this.children,"长度")
                 this.dots = new Array(this.children.length)
             },
-            scrollEnd(){
+        },
+       destroyed() {
+            clearTimeout(this.timer)
+        },
 
-            }
-        }
     }
 </script>
 
