@@ -63,9 +63,10 @@
                     pageIndex  +=1
                 }
                 this.timer = setTimeout(() => {
-                    this.slider.goToPage(pageIndex,0,400)
+                    this.slider.goToPage(pageIndex,0,400)   //去向的页面，位置x,y方向的值
                 },this.interval)
             },
+
                 //初始化slider的宽度
             _setSliderWidth(isResize) {   //设置轮播图的宽度
                 //获取slider,也就是轮播图的for循环div子容器
@@ -95,12 +96,13 @@
                 this.slider = new BScroll(this.$refs.slider,{
                     scrollX:true,
                     scrollY:false,
-                    momentum:false,
+                    momentum:false,  // 惯性
                     snap:true,
-                    snapLoop:this.loop,
+                    snapLoop:this.loop, //循环
                     snapThreshold:0.3,
                     snapSpeed:400
                 })
+                //slider绑定事件，滚动完毕事件
                 this.slider.on('scrollEnd',() => {
                     //Current 现在的
                     let pageIndex = this.slider.getCurrentPage().pageX  //获取当前页面栈的实例
@@ -108,6 +110,7 @@
                         pageIndex -= 1
                     }
                     this.currentPageIndex = pageIndex
+
                     //清除定时器轮播图滚动，之后再执行轮播器自动滚动
                     if(this.autoPlay){
                         clearTimeout(this.timer)
@@ -117,11 +120,13 @@
                 })
             },
 
+            //初始化点
             _initDots(){
                 // console.log(this.children,"长度")
                 this.dots = new Array(this.children.length)
             },
         },
+        //销毁
        destroyed() {
             clearTimeout(this.timer)
         },
@@ -160,8 +165,8 @@
       .dot
         display: inline-block
         margin: 0 4px
-        width: 8px
-        height: 8px
+        width: 6px
+        height: 6px
         border-radius: 50%
         background: $color-text-ll
         &.active

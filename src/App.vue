@@ -3,7 +3,7 @@
     <m-header></m-header>
     <tab></tab>
     <keep-alive>
-      <!-- keep-alive切换页面不会导致重加载，节省资源 -->
+      <!-- keep-alive切换页面不会导致重加载，缓存到内存当中，节省资源 -->
     <router-view></router-view>
     </keep-alive>
   </div>

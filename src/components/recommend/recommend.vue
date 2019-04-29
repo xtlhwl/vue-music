@@ -40,18 +40,17 @@ export default {
                 }
             })
         },
-        //  _getDiscList() {
-        //     getDiscList().then((res) => {
-        //         if(res.code === ERR_OK){
-        //             console.log(res.data)
-
-        //         }
-        //     })
-        // }
+       _getDiscList() {
+           getDiscList().then((res) =>{
+               if(res.code === ERR_OK){
+                   console.log(res.data.list)
+               }
+           })
+       }
     },
     created() {
         this._getRecommend()
-        // this._getDiscList()
+        this._getDiscList()
     },
 
     components:{
