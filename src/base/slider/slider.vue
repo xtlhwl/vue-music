@@ -94,8 +94,8 @@
             //初始化slider 轮播器
             _initSlider() { 
                 this.slider = new BScroll(this.$refs.slider,{
-                    scrollX:true,
-                    scrollY:false,
+                    scrollX:true, //X方向滚动
+                    scrollY:false, //Y方法滚动
                     momentum:false,  // 惯性
                     snap:true,
                     snapLoop:this.loop, //循环
