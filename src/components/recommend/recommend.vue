@@ -1,22 +1,24 @@
 <template>
     <div class="recommend">
-        <scroll class="recommend-content" :data="disclist">
+        <!-- 传入data数据，在scroll中有watch事件监听data数据，data发生改变，会执行refresh()-->
+        <scroll ref="scroll" class="recommend-content" :data="disclist">
             <div>
                 <div v-if="recommends.length" class="slider-wrapper"> 
                     <slider>
                         <div v-for="(item,index) in recommends" :key="index" >
                             <a :href="item.linkUrl">
-                                <img :src="item.picUrl" ></img>
+                                <img class="needsclick" @load="loadimage" :src="item.picUrl" ></img>
                             </a>
                         </div>
                     </slider>
                 </div>
                 <div class="recommend-list">
                     <h1 class="list-title">热门歌单推荐</h1>
-                    <ul>
-                        <li v-for="(item,index) in disclist" :key="index" class="item">
+                    <ul >
+                        <li  v-for="(item,index) in disclist" :key="index" class="item">
                             <div class="icon">
-                                <img :src="item.imgurl" width="60px" height="60px"> 
+                                <!-- 用懒加载加载图片 -->
+                                <img v-lazy="item.imgurl" width="60px" height="60px"> 
                             </div>
                             <div class="text">
                                 <h2 class="name" v-html="item.creator.name"></h2>
@@ -25,6 +27,9 @@
                         </li>
                     </ul>
                 </div>
+            </div>
+            <div class="loading-container" v-show="!disclist.length">
+                <loading></loading>
             </div>
         </scroll>
     </div>
@@ -35,6 +40,7 @@ import { getDiscList, getRecommend } from 'api/recommend'
 import { ERR_OK }  from 'api/config'
 import Slider from 'base/slider/slider'
 import Scroll from 'base/scroll/scroll'
+import Loading from 'base/loading/loading'
 
 export default {
     data(){
@@ -59,16 +65,27 @@ export default {
                    this.disclist = res.data.list
                }
            })
+       },
+       loadimage(){//如果轮播图撑开的话，重新加载滚动scroll事件
+           if(!this.checkloaded){
+               this.$refs.scroll.refresh();
+               console.log('tag', '撑开')
+               this.checkloaded = true;
+           }
        }
     },
     created() {
         this._getRecommend()
-        this._getDiscList()
+        this._getDiscList() 
+        // setTimeout(() => {
+        //     this._getDiscList()   //加载图标测试
+        // }, 1000);
     },
 
     components:{
         Slider,
-        Scroll
+        Scroll,
+        Loading,
     }
 }
 </script>
