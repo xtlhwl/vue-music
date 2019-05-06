@@ -75,6 +75,13 @@ export default {
         },
         
     },
+    computed:{
+        shortcutList(){
+            return this.data.map((group) => {
+                return group.title.substr(0,1)
+            })
+        }
+    },
     created(){
         this._getSingerList()
     },
