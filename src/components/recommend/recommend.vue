@@ -42,11 +42,13 @@ import Slider from 'base/slider/slider'
 import Scroll from 'base/scroll/scroll'
 import Loading from 'base/loading/loading'
 
+
 export default {
     data(){
         return {
             recommends: [],
             disclist: [],
+            songerlist:[],
         }
     },
     methods:{
@@ -61,11 +63,12 @@ export default {
        _getDiscList() {
            getDiscList().then((res) =>{
                if(res.code === ERR_OK){
-                   console.log(res.data.list)
+                   
                    this.disclist = res.data.list
                }
            })
        },
+       
        loadimage(){//如果轮播图撑开的话，重新加载滚动scroll事件
            if(!this.checkloaded){
                this.$refs.scroll.refresh();
@@ -76,7 +79,7 @@ export default {
     },
     created() {
         this._getRecommend()
-        this._getDiscList() 
+        this._getDiscList()
         // setTimeout(() => {
         //     this._getDiscList()   //加载图标测试
         // }, 1000);
