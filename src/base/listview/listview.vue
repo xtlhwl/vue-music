@@ -10,7 +10,15 @@
                     </li>
                 </ul>
             </li>
-        </ul>
+        </ul>        
+        <!-- touchstart事件，当触点与触控设备表面接触时触发touchstart事件. -->
+        <div class="list-shortcut" @touchstart="onShortcutTouchStart">
+          <ul>
+            <li v-for="(item,index) in shortcutList" :key="index" class="item" >
+              {{item}}
+            </li>
+          </ul>
+        </div>
     </scroll>
 </template>
 <script>
@@ -25,6 +33,20 @@ export default {
     },
     components:{
         Scroll
+    },
+    computed:{
+      //侧边滚动abcd的数组
+        shortcutList(){
+            return this.data.map((group) => {
+                return group.title.substr(0,1)
+            })
+        }
+    },
+    methods:{
+      //触摸触发的事件
+      onShortcutTouchStart(e){
+
+      },
     }
 }
 </script>

@@ -12,3 +12,5 @@ export function hasClass (el, className) {
   let reg = new RegExp('(^|\\$)' + className + '(\\s|$)')
   return reg.test(el.className)
 }
+
+e
