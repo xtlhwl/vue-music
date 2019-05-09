@@ -1,6 +1,7 @@
 <template>
     <div class="singer">
-        <list-view :data="singers"></list-view>
+        <list-view :data="singers" @select="selectSinger"></list-view>
+        <router-view></router-view>
     </div>
 </template>
 <script>
@@ -13,11 +14,17 @@ const HOT_NAME = '热门'
 const HOT_SINGER_LEN = 10
 export default {
     data() {
-        return {
+        return { 
             singers:[],
         }
     },
     methods:{
+        selectSinger(singer){
+            console.log(singer)
+            this.$router.push({
+                path: `/singer/${singer.id}`
+            })
+        },
         _getSingerList(){
             getSingerList().then((res) =>{
                 if(res.code === ERR_OK){
