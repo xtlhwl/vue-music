@@ -4,8 +4,34 @@
     </transition>
 </template>
 <script>
+import {mapGetters} from 'vuex'
+import {getSingerDetail}  from 'api/singer'
+import {ERR_OK} from 'api/config'
+
 export default {
-    
+    computed:{
+        ...mapGetters([
+            'singer'   //这个是store中getter里面的singer
+        ])
+        
+    },
+    methods:{
+        _getDetaill(){
+            if(!this.singer.id){
+                this.$router.push('/singer')
+                return 
+            }
+            getSingerDetail(this.singer.id).then((res) =>{
+                if(res.code === ERR_OK){
+                    console.log(res.data)
+                }
+            })
+        },
+    },
+    created(){
+        //  
+        this._getDetaill()
+    }
 }
 </script>
 <style lang="stylus" scoped>

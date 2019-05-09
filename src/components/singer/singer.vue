@@ -9,6 +9,7 @@ import {getSingerList} from 'api/singer'
 import { ERR_OK } from 'api/config'
 import Singer from 'common/js/singer'
 import ListView from 'base/listview/listview'
+import {mapMutations} from 'vuex'
 
 const HOT_NAME = '热门'
 const HOT_SINGER_LEN = 10
@@ -19,12 +20,16 @@ export default {
         }
     },
     methods:{
+        //点击歌手页
         selectSinger(singer){
             console.log(singer)
             this.$router.push({
                 path: `/singer/${singer.id}`
-            })
+            });
+            //将点击的歌手信息传入vuex_store
+            this.setSinger(singer);
         },
+        //获取歌手信息
         _getSingerList(){
             getSingerList().then((res) =>{
                 if(res.code === ERR_OK){
@@ -80,6 +85,12 @@ export default {
              //拼接热门和字母分类，得到有序列表
              return hot.concat(ret) //将连各位数组扁平化为一个单维数组
         },
+        //映射setSinger和SET_SINGER
+        ...mapMutations({
+
+            setSinger: 'SET_SINGER'
+        })
+
         
     },
     
