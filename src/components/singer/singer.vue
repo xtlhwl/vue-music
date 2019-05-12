@@ -22,7 +22,6 @@ export default {
     methods:{
         //点击歌手页
         selectSinger(singer){
-            console.log(singer)
             this.$router.push({
                 path: `/singer/${singer.id}`
             });
@@ -87,7 +86,7 @@ export default {
         },
         //映射setSinger和SET_SINGER
         ...mapMutations({
-
+            
             setSinger: 'SET_SINGER'
         })
 

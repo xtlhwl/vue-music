@@ -7,8 +7,14 @@
 import {mapGetters} from 'vuex'
 import {getSingerDetail}  from 'api/singer'
 import {ERR_OK} from 'api/config'
+import {createSong} from 'common/js/song.js'
 
 export default {
+    data:{
+        return(){
+            songs:[]
+        }
+    },
     computed:{
         ...mapGetters([
             'singer'   //这个是store中getter里面的singer
@@ -24,13 +30,28 @@ export default {
             getSingerDetail(this.singer.id).then((res) =>{
                 if(res.code === ERR_OK){
                     console.log(res.data)
+                    this.songs = this._normalsizeSongs(res.data.list)
+                    console.log(this.songs)
                 }
             })
         },
+        _normalsizeSongs(list){
+            let ret = []
+            list.forEach((item) => {
+                let { musicData } = item
+                // if(musicData.songid && musicData.ablummid){
+                    
+                    ret.push(createSong(musicData))
+                // }
+                
+            });
+            return ret
+        }
     },
     created(){
         //  
         this._getDetaill()
+        
     }
 }
 </script>
