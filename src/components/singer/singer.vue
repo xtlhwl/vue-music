@@ -33,6 +33,7 @@ export default {
             getSingerList().then((res) =>{
                 if(res.code === ERR_OK){
                     this.singers = this._normalizeSinger(res.data.list)
+                    
                 }
             })
         },
@@ -86,7 +87,6 @@ export default {
         },
         //映射setSinger和SET_SINGER
         ...mapMutations({
-            
             setSinger: 'SET_SINGER'
         })
 

@@ -1,10 +1,10 @@
 export default class Song {
-  constructor (id, mid, singer, name, ablum, duration, image, url) {
+  constructor ({id, mid, singer, name, album, duration, image, url}) {
     this.id = id
     this.mid = mid
     this.singer = singer
     this.name = name
-    this.ablum = ablum
+    this.ablum = album
     this.duration = duration
     this.image = image
     this.url = url
@@ -18,9 +18,9 @@ export function createSong (musicData) {
     mid: musicData.songmid,
     singer: filtername(musicData.singer),
     name: musicData.songname,
-    ablum: musicData.ablumname,
+    album: musicData.albumname,
     duration: musicData.interval,
-    url: `http://cc.stream.qqmusic.qq.com/C100${musicData.albummid}.m4a?fromtag=52`,
+    url: `http://tsmusic24.tc.qq.com/${musicData.songid}mp3`,
     image: `https:y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jsp?max_age=2592000`
 
   })
