@@ -70,7 +70,7 @@ export default {
 
 
     .slide-enter-active, .slide-leave-active
-        transition: all 0.3s
+        transition: all 0.4s,color 1s;
 
     .slide-enter, .slide-leave-to
         transform: translate3d(100%,0,0)

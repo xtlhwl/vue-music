@@ -5,9 +5,10 @@
     </div>
     <h1 class="title" v-html="title"></h1>
     <div class="bg-image" :style="bgStyle" ref="bgImage">
-        <div class="filter"></div>
+        <div class="filter" ref="filter"></div>
     </div>
-    <scroll :data="songs" class="list" ref="list">
+    <div class="bg-layer" ref="layer"></div>
+    <scroll @scroll="scroll" :data="songs" class="list" ref="list"  :probe-type="probeType" :listen-scroll="listenScroll" >
       <div class="song-list-wrapper">
           <song-list :songs="songs"></song-list>
       </div>
@@ -19,6 +20,7 @@
  import Scroll from 'base/scroll/scroll'
  import SongList from 'base/song-list/song-list'
 
+  let RESEAVE_HEIGHT = 40
   export default {
     props:{
           bgImage: {
@@ -39,10 +41,55 @@
           this.$router.push({
           path: `/singer`
         });
+        },
+        scroll(pos){
+          this.scrollY = pos.y
+        }
+      },
+      watch:{
+        //滑动事件
+        scrollY(newY){
+          let translateY = Math.max(this.minHeight,newY)
+          let zindex = 0
+          let scale = 1
+          let blur = 0
+          this.$refs.layer.style['transform'] =`translate3d(0,${translateY}px,0)`
+          this.$refs.layer.style['webkitTransform'] =`translate3d(0,${translateY}px,0)`
+          const parect = Math.abs(newY / this.bgHeight)
+          
+          if(newY < this.minHeight){
+            zindex = 10
+            this.$refs.bgImage.style.paddingTop = 0
+            this.$refs.bgImage.style.height = `${RESEAVE_HEIGHT}px`
+          }else{
+            zindex= 0
+            this.$refs.bgImage.style.paddingTop = "70% "
+            this.$refs.bgImage.style.height = 0
+          }
+          if(newY > 0){
+            scale = 1 + parect
+            zindex = 10
+          }else{
+            blur = Math.min(30*parect,20)
+            this.$refs.bgImage.style.width = "100% "
+            
+          }
+          this.$refs.bgImage.style.zIndex = zindex
+          this.$refs.bgImage.style['transform'] =`scale(${scale})`
+          this.$refs.bgImage.style['webkitTransform'] =`scale(${scale})`
+          this.$refs.filter.style['backdrop-filter'] = `blur(${blur}px)`
+          this.$refs.filter.style['webkitBackdrop-filter'] = `blur(${blur}px)`
+          
         }
       },
       created(){
-          
+            this.listenScroll= true, //监听滚动
+            this.probeType = 3
+      },
+      data(){
+        return{
+          scrollY:0
+        }
       },
       computed:{
         bgStyle(){
@@ -54,7 +101,9 @@
         SongList
       },
       mounted(){
-        this.$refs.list.$el.style.top = `${this.$refs.bgImage.clientHeight-5}px`
+        this.bgHeight = this.$refs.bgImage.clientHeight
+        this.minHeight = -this.bgHeight + RESEAVE_HEIGHT
+        this.$refs.list.$el.style.top = `${this.$refs.bgImage.clientHeight}px`
       }
   }
 </script>
@@ -138,7 +187,7 @@
       position: fixed
       top: 0
       bottom: 0
-      width: 100%
+      width: 100% 
       background: $color-background
       .song-list-wrapper
         padding: 20px 30px
