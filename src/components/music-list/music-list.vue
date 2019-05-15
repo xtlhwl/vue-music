@@ -5,6 +5,12 @@
     </div>
     <h1 class="title" v-html="title"></h1>
     <div class="bg-image" :style="bgStyle" ref="bgImage">
+        <div class="play-wrapper" >
+          <div class="play" v-show="songs.length > 0" ref="palyShow">
+            <i class="icon-play"></i>
+            <span class="text">随机播放</span>
+          </div>
+        </div>
         <div class="filter" ref="filter"></div>
     </div>
     <div class="bg-layer" ref="layer"></div>
@@ -12,13 +18,22 @@
       <div class="song-list-wrapper">
           <song-list :songs="songs"></song-list>
       </div>
+      <div class="loading-container" v-show="!songs.length">
+      <loading></loading>
+      </div>
     </scroll>
+    
   </div>
 </template>
 
 <script type="text/ecmascript-6">
  import Scroll from 'base/scroll/scroll'
  import SongList from 'base/song-list/song-list'
+ import {prefixStyle} from 'common/js/dom'
+ import Loading from 'base/loading/loading'
+
+ let transform = prefixStyle('transform')
+ let filter = prefixStyle('backdrop-filter')
 
   let RESEAVE_HEIGHT = 40
   export default {
@@ -53,32 +68,34 @@
           let zindex = 0
           let scale = 1
           let blur = 0
-          this.$refs.layer.style['transform'] =`translate3d(0,${translateY}px,0)`
-          this.$refs.layer.style['webkitTransform'] =`translate3d(0,${translateY}px,0)`
+          this.$refs.layer.style[transform] =`translate3d(0,${translateY}px,0)`
           const parect = Math.abs(newY / this.bgHeight)
-          
-          if(newY < this.minHeight){
-            zindex = 10
-            this.$refs.bgImage.style.paddingTop = 0
-            this.$refs.bgImage.style.height = `${RESEAVE_HEIGHT}px`
-          }else{
-            zindex= 0
-            this.$refs.bgImage.style.paddingTop = "70% "
-            this.$refs.bgImage.style.height = 0
-          }
           if(newY > 0){
             scale = 1 + parect
             zindex = 10
           }else{
-            blur = Math.min(30*parect,20)
-            this.$refs.bgImage.style.width = "100% "
-            
+            blur = Math.min(20 * parect,20)
+            console.log(blur)
+            // this.$refs.bgImage.style.width = "100%"
           }
+          //
+          this.$refs.filter.style[filter] = `blur(${blur}px)`
+          if(newY < this.minHeight){
+            zindex = 10
+            //当上滑动到top-bar时
+            this.$refs.bgImage.style.paddingTop = 0
+            this.$refs.bgImage.style.height = `${RESEAVE_HEIGHT}px`
+            this.$refs.palyShow.style.display = 'none'
+          }else{
+            //恢复原来状态
+            this.$refs.bgImage.style.paddingTop = "70% "
+            this.$refs.bgImage.style.height = 0
+          }
+          
           this.$refs.bgImage.style.zIndex = zindex
-          this.$refs.bgImage.style['transform'] =`scale(${scale})`
-          this.$refs.bgImage.style['webkitTransform'] =`scale(${scale})`
-          this.$refs.filter.style['backdrop-filter'] = `blur(${blur}px)`
-          this.$refs.filter.style['webkitBackdrop-filter'] = `blur(${blur}px)`
+          this.$refs.bgImage.style[transform] =`scale(${scale})`
+          
+          
           
         }
       },
@@ -98,7 +115,8 @@
       },
       components:{
         Scroll,
-        SongList
+        SongList,
+        Loading
       },
       mounted(){
         this.bgHeight = this.$refs.bgImage.clientHeight
