@@ -19,7 +19,7 @@
           <song-list :songs="songs"></song-list>
       </div>
       <div class="loading-container" v-show="!songs.length">
-      <loading></loading>
+      <loading></loading> 
       </div>
     </scroll>
     
