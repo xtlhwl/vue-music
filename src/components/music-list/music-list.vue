@@ -16,7 +16,7 @@
     <div class="bg-layer" ref="layer"></div>
     <scroll @scroll="scroll" :data="songs" class="list" ref="list"  :probe-type="probeType" :listen-scroll="listenScroll" >
       <div class="song-list-wrapper">
-          <song-list :songs="songs"></song-list>
+          <song-list  @select="selectItem" :songs="songs"></song-list>
       </div>
       <div class="loading-container" v-show="!songs.length">
       <loading></loading> 
@@ -31,6 +31,7 @@
  import SongList from 'base/song-list/song-list'
  import {prefixStyle} from 'common/js/dom'
  import Loading from 'base/loading/loading'
+ import {mapActions} from 'vuex'
 
  let transform = prefixStyle('transform')
  let filter = prefixStyle('backdrop-filter')
@@ -59,7 +60,16 @@
         },
         scroll(pos){
           this.scrollY = pos.y
-        }
+        },
+        selectItem(item,index){
+            this.selectPlay({
+              list:this.songs,
+              index
+            })
+        },
+        ...mapActions([
+          'selectPlay'
+        ])
       },
       watch:{
         //滑动事件
@@ -90,6 +100,7 @@
             //恢复原来状态
             this.$refs.bgImage.style.paddingTop = "70% "
             this.$refs.bgImage.style.height = 0
+            this.$refs.palyShow.style.display = 'inherit'
           }
           
           this.$refs.bgImage.style.zIndex = zindex

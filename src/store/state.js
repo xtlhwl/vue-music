@@ -3,7 +3,7 @@ import {playmode} from 'common/js/config.js'
 const state = {
   singer: {},
   playing: false,
-  fullScreen: false,
+  fullScreen: true,
   playlist: [],
   sequenceList: [],
   mode: playmode.sequence,
