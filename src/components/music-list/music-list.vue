@@ -65,7 +65,7 @@
             this.selectPlay({
               list:this.songs,
               index
-            })
+              })
         },
         ...mapActions([
           'selectPlay'
@@ -85,7 +85,6 @@
             zindex = 10
           }else{
             blur = Math.min(20 * parect,20)
-            console.log(blur)
             // this.$refs.bgImage.style.width = "100%"
           }
           //
@@ -102,12 +101,8 @@
             this.$refs.bgImage.style.height = 0
             this.$refs.palyShow.style.display = 'inherit'
           }
-          
           this.$refs.bgImage.style.zIndex = zindex
           this.$refs.bgImage.style[transform] =`scale(${scale})`
-          
-          
-          
         }
       },
       created(){

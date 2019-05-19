@@ -33,3 +33,33 @@ export function getSingerDetail (singerId) {
   })
   return jsonp(url, data, options)
 }
+
+export function getVkey (songmid) {
+  const url = 'https://u.y.qq.com/cgi-bin/musicu.fcg'
+  const data = Object.assign({}, commonParams, {
+    callback: 'getplaysongvkey05512360090100232',
+    g_tk: 1907351394,
+    jsonpCallback: 'getplaysongvkey05512360090100232',
+    loginUin: 0,
+    hostUin: 0,
+    platform: 'yqq',
+    needNewCode: 0,
+    data: JSON.stringify({
+      'req': {'module': 'CDN.SrfCdnDispatchServer'},
+      'req_0': {
+        'module': 'vkey.GetVkeyServer',
+        'method': 'CgiGetVkey',
+        'param': {
+          'guid': '3806016700',
+          'songmid': [songmid],
+          'songtype': [0],
+          'uin': '0',
+          'loginflag': 1,
+          'platform': '20'
+        }
+      },
+      'comm': {'uin': 0, 'format': 'json', 'ct': 20, 'cv': 0}
+    })
+  })
+  return jsonp(url, data)
+}

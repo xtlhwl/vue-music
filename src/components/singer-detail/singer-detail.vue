@@ -4,10 +4,10 @@
     </transition>
 </template>
 <script>
-import {createSong} from 'common/js/song.js'
+import {createSong} from 'common/js/song'
 import MusicList from 'components/music-list/music-list'
 import {mapGetters} from 'vuex'
-import {getSingerDetail}  from 'api/singer'
+import {getSingerDetail,getVkey}  from 'api/singer'
 import {ERR_OK} from 'api/config'
 
 
@@ -38,6 +38,7 @@ export default {
             getSingerDetail(this.singer.id).then((res) =>{
                 if(res.code === ERR_OK){
                     this.songs = this._normalsizeSongs(res.data.list)
+                    console.log(this.songs)
                 }
             })
         },
@@ -46,6 +47,14 @@ export default {
             list.forEach((item) => {
                 let {musicData} = item
                  if(musicData.songid && musicData.albummid){
+                    // getVkey(musicData.songmid).then((res) =>{
+                    //      if(res.code === ERR_OK){
+                    //          const svkey = res.req_0.data.midurlinfo
+                    //          const songVkey = svkey[0].purl
+                    //          const newSong = createSong(musicData,songVkey)
+                    //          ret.push(newSong)
+                    //      }
+                    //  })
                     ret.push(createSong(musicData))
                  }
                 

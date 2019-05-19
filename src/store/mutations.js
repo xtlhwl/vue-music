@@ -12,7 +12,7 @@ const matutaions = {
     state.playlist = list
   },
   [type.SET_FULL_SCREEN] (state, flag) {
-    state.fullScroll = flag
+    state.fullScreen = flag
   },
   [type.SET_PLAY_MODE] (state, mode) {
     state.mode = mode

@@ -5,10 +5,10 @@
                     <img :src="currentSong.image" width="100%" height="100%" >
                 </div>
                 <div class="top">
-                    <div class="back">
-                        <i class="icon-back"></i>
+                    <div class="back" @click="backsamll">
+                        <i class="icon-back" ></i>
                     </div>
-                    <h1 class="title"></h1>
+                    <h1 class="title">{{currentSong.name}}</h1>
                     <h2 class="subtitle"></h2>
                 </div>
                 <div class="middle">
@@ -40,13 +40,13 @@
                     </div>
                 </div>
         </div>
-        <div class="mini-player" v-show="!fullScreen">
+        <div class="mini-player" v-show="!fullScreen" @click="backGreat">
             <div class="icon">
-                <img width="40px" height="40px">
+                <img width="40px" height="40px" :src="currentSong.image">
             </div>
             <div class="text">
-                <h2 class="name"></h2>
-                <p class="desc"></p>
+                <h2 class="name">{{currentSong.name}}</h2>
+                <p class="desc">{{currentSong.singer}}</p>
             </div>
             <div class="control">
             </div>
@@ -58,7 +58,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-    import {mapGetters} from 'vuex'
+    import { mapGetters,mapMutations } from 'vuex'
 
 export default{
     computed:{
@@ -68,6 +68,18 @@ export default{
             'currentSong'
         ])
     },
+    methods:{
+      backsamll(){
+        this.setFullScreen(false)
+        console.log("执行back")
+      },
+      backGreat(){
+        this.setFullScreen(true)
+      },
+      ...mapMutations({
+        setFullScreen: 'SET_FULL_SCREEN'
+      })
+    }
 
 }
 </script>

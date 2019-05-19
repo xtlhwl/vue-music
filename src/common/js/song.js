@@ -12,7 +12,7 @@ export default class Song {
 }
 
 // 工厂方法
-export function createSong (musicData) {
+export function createSong (musicData, songVkey) {
   return new Song({
     id: musicData.songid,
     mid: musicData.songmid,
@@ -20,9 +20,8 @@ export function createSong (musicData) {
     name: musicData.songname,
     album: musicData.albumname,
     duration: musicData.interval,
-    url: `http://tsmusic24.tc.qq.com/${musicData.songid}mp3`,
-    image: `https:y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jsp?max_age=2592000`
-
+    url: `http://223.111.154.143/amobile.music.tc.qq.com/${songVkey}`,
+    image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg`
   })
 }
 function filtername (singer) {
