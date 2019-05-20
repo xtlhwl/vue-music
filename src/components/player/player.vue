@@ -1,5 +1,6 @@
 <template>
   <div class="player" v-show="playlist.length>0">
+    <transition name="normal" >
         <div class="normal-player" v-show="fullScreen">
                 <div class="background">
                     <img :src="currentSong.image" width="100%" height="100%" >
@@ -29,7 +30,7 @@
                             <i class="icon-prev"></i>
                         </div>
                         <div class="icon i-center">
-                            <i class="icon-play"></i>
+                            <i @click="togglePlay" :class="playIcon"></i>
                         </div>
                         <div class="icon i-right">
                             <i class="icon icon-next"></i>
@@ -40,6 +41,8 @@
                     </div>
                 </div>
         </div>
+    </transition>
+    <transition name="mini">
         <div class="mini-player" v-show="!fullScreen" @click="backGreat">
             <div class="icon">
                 <img width="40px" height="40px" :src="currentSong.image">
@@ -49,23 +52,34 @@
                 <p class="desc">{{currentSong.singer}}</p>
             </div>
             <div class="control">
+              <i :class="playIconMini" @click="togglePlay"></i>
             </div>
             <div class="control">
                 <i class="icon-playlist"></i>
             </div>
         </div>
+    </transition>
+    <audio ref="audio" :src="currentSong.url"></audio>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
     import { mapGetters,mapMutations } from 'vuex'
+    import animations from 'create-keyframe-animation'
 
 export default{
     computed:{
+      playIcon(){
+        return this.playing ? 'icon-pause' : 'icon-play'
+      },
+      playIconMini(){
+        return this.playing ? 'icon-pause-mini' : 'icon-play-mini'
+      },
         ...mapGetters([
             'fullScreen',
             'playlist',
-            'currentSong'
+            'currentSong',
+            'playing'
         ])
     },
     methods:{
@@ -74,11 +88,42 @@ export default{
         console.log("执行back")
       },
       backGreat(){
-        this.setFullScreen(true)
+        this.setFullScreen(true) 
       },
       ...mapMutations({
-        setFullScreen: 'SET_FULL_SCREEN'
-      })
+        setFullScreen: 'SET_FULL_SCREEN',
+        setPlayingState:'SET_PLAYING_STATE]'
+      }),
+      // enter(el,done){
+
+      // },
+      // afterEnter(){
+
+      // },
+      // leave(el,done ){
+        
+      // },
+      // atferLeave(){
+
+      // }
+      togglePlay(){
+        //设置播放暂停
+        this.setPlayingState(!this.playing)
+      }
+    },
+    watch:{
+      currentSong(){
+        //当歌曲列发生改变变，自动播放
+        this.$nextTick(() =>{
+          this.$refs.audio.play()
+        })
+      },
+      playing(newPlaying){
+        const audio = this.$refs.audio
+        this.$nextTick(() =>{
+          newPlaying ? audio.play() : audio.pause()
+        })
+      }
     }
 
 }
