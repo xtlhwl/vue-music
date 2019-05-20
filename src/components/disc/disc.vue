@@ -5,9 +5,24 @@
 </template>
 <script>
 import MusicList from 'components/music-list/music-list'
+import { getDisc } from 'api/disc'
+import { ERR_OK } from 'api/config'
+
 export default {
     components:{
         MusicList
+    },
+    methods(){
+        _getDisc((res) =>{
+            getDisc().then((res) =>{
+                if(res.code === ERR_OK){
+                    console.log(res)
+                }
+            })
+        })
+    },
+    created(){
+        this._getDisc(6941426668)
     }
 }
 </script>

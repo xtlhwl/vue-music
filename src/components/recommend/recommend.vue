@@ -7,7 +7,7 @@
                     <slider>
                         <div v-for="(item,index) in recommends" :key="index" >
                             <a :href="item.linkUrl">
-                                <img class="needsclick" @load="loadimage" :src="item.picUrl" ></img>
+                                <img class="needsclick" @load="loadimage" :src="item.picUrl" >
                             </a>
                         </div>
                     </slider>
@@ -15,7 +15,7 @@
                 <div class="recommend-list">
                     <h1 class="list-title">热门歌单推荐</h1>
                     <ul >
-                        <li  v-for="(item,index) in disclist" :key="index" class="item">
+                        <li  @click="selectItem(item)" v-for="(item,index) in disclist" :key="index" class="item">
                             <div class="icon">
                                 <!-- 用懒加载加载图片 -->
                                 <img v-lazy="item.imgurl" width="60px" height="60px"> 
@@ -32,7 +32,9 @@
                 <loading></loading>
             </div>
         </scroll>
+        <router-view></router-view>
     </div>
+    
 </template>
 <script>
 // import  { getRecommend } from 'api/recommend'
@@ -41,6 +43,7 @@ import { ERR_OK }  from 'api/config'
 import Slider from 'base/slider/slider'
 import Scroll from 'base/scroll/scroll'
 import Loading from 'base/loading/loading'
+import { getDisc } from 'api/disc'
 
 
 export default {
@@ -63,10 +66,16 @@ export default {
        _getDiscList() {
            getDiscList().then((res) =>{
                if(res.code === ERR_OK){
-                   
                    this.disclist = res.data.list
+                   console.log(this.disclist)
                }
            })
+       },
+       selectItem(item){
+        //    this.$router.push({
+        //        path: `/recommend/${item.dissid}`
+        //    })
+           console.log(item)
        },
        
        loadimage(){//如果轮播图撑开的话，重新加载滚动scroll事件
@@ -75,11 +84,19 @@ export default {
                console.log('tag', '撑开')
                this.checkloaded = true;
            }
+       },
+       _getDisc(item){
+           getDisc(item).then((res) =>{
+                if(res.code === ERR_OK){
+                    console.log(res)
+                }
+            })
        }
     },
     created() {
         this._getRecommend()
         this._getDiscList()
+        this._getDisc(6941426668)
         // setTimeout(() => {
         //     this._getDiscList()   //加载图标测试
         // }, 1000);
