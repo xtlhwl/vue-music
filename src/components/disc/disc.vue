@@ -1,29 +1,32 @@
 <template>
     <transition>
-    <music-list></music-list>
+    <music-list :title="title" :bg-image="bgImage"></music-list>
     </transition>
 </template>
 <script>
 import MusicList from 'components/music-list/music-list'
-import { getDisc } from 'api/disc'
 import { ERR_OK } from 'api/config'
-
+import {mapGetters} from 'vuex'
 export default {
     components:{
         MusicList
     },
-    methods(){
-        _getDisc((res) =>{
-            getDisc().then((res) =>{
-                if(res.code === ERR_OK){
-                    console.log(res)
-                }
-            })
-        })
+    methods:{
+        
+       
     },
-    created(){
-        this._getDisc(6941426668)
-    }
+    computed:{
+        ...mapGetters([
+            'disc'
+        ]),
+        title(){
+           return this.disc.dissname
+        },
+        bgImage(){
+           return this.disc.imgurl
+        }
+    },
+    
 }
 </script>
 <style lang="stylus" scoped>

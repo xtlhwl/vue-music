@@ -54,9 +54,7 @@
     },
     methods:{
         backpage(){
-          this.$router.push({
-          path: `/singer`
-        });
+          window.history.go(-1)
         },
         scroll(pos){
           this.scrollY = pos.y

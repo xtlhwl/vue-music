@@ -1,7 +1,7 @@
 import jsonp from 'common/js/jsonp'
 import {commonParams, options } from './config'
 
-export function getDisc (disstid) {
+export function getDisc () {
   const url = 'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg'
   const data = Object.assign({}, commonParams, {
     type: 1,
@@ -9,7 +9,7 @@ export function getDisc (disstid) {
     utf8: 1,
     onlysong: 0,
     new_format: 1,
-    disstid: disstid,
+    disstid: 6941426668, // `${disstid}`
     loginUin: 0,
     hostUin: 0,
     format: 'json',

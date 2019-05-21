@@ -44,6 +44,7 @@ import Slider from 'base/slider/slider'
 import Scroll from 'base/scroll/scroll'
 import Loading from 'base/loading/loading'
 import { getDisc } from 'api/disc'
+import {mapMutations} from 'vuex'
 
 
 export default {
@@ -72,10 +73,10 @@ export default {
            })
        },
        selectItem(item){
-        //    this.$router.push({
-        //        path: `/recommend/${item.dissid}`
-        //    })
-           console.log(item)
+           this.$router.push({
+               path: `/recommend/${item.dissid}`
+           })
+           this.setDisc(item)
        },
        
        loadimage(){//如果轮播图撑开的话，重新加载滚动scroll事件
@@ -85,18 +86,14 @@ export default {
                this.checkloaded = true;
            }
        },
-       _getDisc(item){
-           getDisc(item).then((res) =>{
-                if(res.code === ERR_OK){
-                    console.log(res)
-                }
-            })
-       }
+       ...mapMutations({
+           setDisc:'SET_DISC'
+       })
+
     },
     created() {
         this._getRecommend()
         this._getDiscList()
-        this._getDisc(6941426668)
         // setTimeout(() => {
         //     this._getDiscList()   //加载图标测试
         // }, 1000);

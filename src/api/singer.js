@@ -61,5 +61,5 @@ export function getVkey (songmid) {
       'comm': {'uin': 0, 'format': 'json', 'ct': 20, 'cv': 0}
     })
   })
-  return jsonp(url, data)
+  return jsonp(url, data, options)
 }
