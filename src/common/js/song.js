@@ -34,3 +34,22 @@ function filtername (singer) {
   })
   return ret.join('/')
 }
+
+export class DiscSong {
+  constructor (songmid, singer, singermid, name, ablum) {
+    this.songmid = songmid,
+    this.singer = singer,
+    this.singermid = singermid,
+    this.name = name,
+    this.ablum = ablum
+  }
+}
+export function createDiscSong (songmid, singer, singermid, name, ablum) {
+  return new DiscSong(
+    songmid,
+    singer,
+    singermid,
+    name,
+    ablum
+  )
+}

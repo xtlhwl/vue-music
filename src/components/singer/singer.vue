@@ -64,8 +64,6 @@ export default {
                     id: item.Fsinger_mid,
                     name: item.Fsinger_name
                 }))
-                
-                
              });
              //将map中字母分类A-Z排序
              let hot = []
