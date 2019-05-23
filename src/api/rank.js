@@ -18,3 +18,20 @@ export function getTopList () {
     return Promise.resolve(res.data)
   })
 }
+
+export function getTopListSong (topId) {
+  const url = 'https://u.y.qq.com/cgi-bin/musicu.fcg'
+
+  const data = Object.assign({}, commonParams, {
+    '-': 'getUCGI3240088262216596',
+    g_tk: 5381,
+    loginUin: 0,
+    hostUin: 0,
+    format: 'json',
+    platform: 'yqq.json',
+    needNewCode: 0,
+    data: {'detail': {'module': 'musicToplist.ToplistInfoServer', 'method': 'GetDetail', 'param': {'topId': topId, 'offset': 0, 'num': 20, 'period': '2019_20'}}, 'comm': {'ct': 24, 'cv': 0}}
+
+  })
+  return jsonp()
+}
