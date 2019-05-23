@@ -43,7 +43,7 @@ import { ERR_OK }  from 'api/config'
 import Slider from 'base/slider/slider'
 import Scroll from 'base/scroll/scroll'
 import Loading from 'base/loading/loading'
-import { getDisc } from 'api/disc'
+// import { getDisc } from 'api/disc'
 import {mapMutations} from 'vuex'
 
 
