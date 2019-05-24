@@ -1,22 +1,55 @@
 <template>
     <transition name="slide">
-        <music-list :bg-image="imageurl" :title="title"></music-list>
+        <music-list :bg-image="imageurl" :title="title" :songs="songs" ></music-list>
     </transition>
 </template>
 <script>
 import MusicList from 'components/music-list/music-list'
 import {mapGetters} from 'vuex'
+import {getTopListSong} from 'api/rank'
+import {ERR_OK} from 'api/config'
+import {createSong} from 'common/js/song.js'
 export default {
     components:{
         MusicList,
     },
     data(){
         return{
-            
+            songs:[]
         }
     },
-    methods(){
-        
+    methods:{
+        _getTopListSong(){
+            //如果没有获取到这个榜单的ID时，返回上一页
+            if(!this.toplist.id){
+                this.$router.push('/rank')
+                return 
+            }
+            getTopListSong(this.toplist.id).then((res) =>{
+                if(res.code === ERR_OK){
+                    this.songs= this._normalsizeSongs(res.songlist)
+                }
+            })
+        },
+        _normalsizeSongs(list){
+            let ret = []
+            list.forEach((item) => {
+                let musicData = item.data
+                 if(musicData.songid && musicData.albummid){
+                    // getVkey(musicData.songmid).then((res) =>{
+                    //      if(res.code === ERR_OK){
+                    //          const svkey = res.req_0.data.midurlinfo
+                    //          const songVkey = svkey[0].purl
+                    //          const newSong = createSong(musicData,songVkey)
+                    //          ret.push(newSong)
+                    //      }
+                    //  })
+                    ret.push(createSong(musicData))
+                 }
+                
+            })
+            return ret
+        },
     },
     computed:{
         imageurl(){
@@ -28,6 +61,9 @@ export default {
         ...mapGetters([
             'toplist'
         ])
+    },
+    created(){
+        this._getTopListSong()
     }
 }
 </script>
