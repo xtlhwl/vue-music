@@ -16,7 +16,7 @@ export function getRecommend () {
 export function getDiscList () {
   const url = '/api/getDiscList'
 
-  const data = Object.assign({}, commonParams, {
+  const data = Object.assign({}, commonParams, { // Object.assign(obj1,obj2,obj3) 拼接对象，将obj2，obj3拼接到obj1
     // 以下参数自行参考源json文件的Query String Parameters
     picmid: 1,
     rnd: Math.random(),

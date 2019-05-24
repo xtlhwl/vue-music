@@ -31,7 +31,6 @@ export function getTopListSong (topId) {
     platform: 'yqq.json',
     needNewCode: 0,
     data: {'detail': {'module': 'musicToplist.ToplistInfoServer', 'method': 'GetDetail', 'param': {'topId': topId, 'offset': 0, 'num': 20, 'period': '2019_20'}}, 'comm': {'ct': 24, 'cv': 0}}
-
   })
   return jsonp()
 }
