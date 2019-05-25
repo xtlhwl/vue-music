@@ -69,12 +69,7 @@
 │   │   │   └── music-icon.woff
 │   │   ├── image
 │   │   │   ├── default.png
-│   │   │   ├── first@2x.png
-│   │   │   ├── first@3x.png
-│   │   │   ├── second@2x.png
-│   │   │   ├── second@3x.png
-│   │   │   ├── third@2x.png
-│   │   │   └── third@3x.png
+|   |   |
 │   │   ├── js
 │   │   │   ├── config.js
 │   │   │   ├── dom.js
