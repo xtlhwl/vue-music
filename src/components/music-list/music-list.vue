@@ -18,9 +18,9 @@
       <div class="song-list-wrapper">
           <song-list  @select="selectItem" :songs="songs" :rank="rank"></song-list>
       </div>
-      <diev class="loading-container" v-show="!songs.length">
+      <div class="loading-container" v-show="!songs.length">
       <loading></loading> 
-      </diev>
+      </div>
     </scroll>
     
   </div>
