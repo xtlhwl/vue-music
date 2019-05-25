@@ -1,24 +1,7 @@
-# vue-music
-
-### 音乐播放器
->立个flag，2019年四月17日，五月底完成。
-
->API用的是qq音乐的
-
->有一些API需要跨域才能获取，需要在/build/webpack.dev.conf.js中进行代理配置
-
->5月25日:预计26日完成
-
->
-***
-
-## 目录结构
-
-<pre>
 .
-├── README.md 
+├── README.md
 ├── build
-│   ├── build.js  
+│   ├── build.js
 │   ├── check-versions.js
 │   ├── logo.png
 │   ├── utils.js
@@ -35,15 +18,15 @@
 ├── package.json
 ├── src
 │   ├── App.vue
-│   ├── api         //api目录
+│   ├── api
 │   │   ├── config.js
 │   │   ├── rank.js
 │   │   ├── recommend.js
-│   │   ├── singer.js  //歌手api
+│   │   ├── singer.js
 │   │   └── song.js
 │   ├── assets
 │   │   └── logo.png
-│   ├── base     //基本组件
+│   ├── base
 │   │   ├── listview
 │   │   │   └── listview.vue
 │   │   ├── loading
@@ -129,36 +112,3 @@
 └── tree.text
 
 32 directories, 79 files
-</pre>
-
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-```
-### 已经实现功能
-- [√] 首页轮播图
-- [√] 竖直滚动
-- [√] 排行榜
-- [√] 歌手页
-- [√] loading
-- [√] 播放页面
-### 尚未实现功能
-- [ ] 播放器播放功能
-- [ ] 进度条
-- [ ] 下一曲
-- [ ] 歌词
-- [ ] 评论
-- [ ] 歌手首字母跳转
-
