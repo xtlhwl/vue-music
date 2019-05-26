@@ -14,7 +14,7 @@ export function getHotkey () {
   })
   return jsonp(url, data, options)
 }
-export function getSearchSong (value) {
+export function getSearchSong (value, page, zhida) {
   const url = '/api/getSearchSong'
   const data = Object.assign({}, commonParams, {
     _: 1558792832943,
@@ -24,7 +24,7 @@ export function getSearchSong (value) {
     needNewCode: 1,
     w: `${value}`,
     zhidaqu: 1,
-    catZhida: 1,
+    catZhida: zhida ? 1 : 0,
     t: 0,
     flag: 1,
     ie: 'utf-8',
@@ -32,7 +32,7 @@ export function getSearchSong (value) {
     aggr: 0,
     perpage: 20,
     n: 20,
-    p: 1,
+    p: `${page}` | 1,
     remoteplace: 'txt.mqq.all'
   })
   return axios.get(url, {

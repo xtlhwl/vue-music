@@ -37,6 +37,10 @@
       refreshDelay: {
         type: Number,
         default: 20
+      },
+      pullup:{
+        type:Boolean,
+        default:false
       }
     },
     mounted() {
@@ -60,8 +64,8 @@
             me.$emit('scroll', pos)
           })
         }
-
         if (this.pullup) {
+          //scrollend，当它滚动结束的时候，当滚动结束的时候当前的y值已经接近底部最大的值时，派发scrollToend事件，然后在suggest组件里监听该事件，再触发下一页操作.maxScrollY向下滚动的时候是负值，所以+50
           this.scroll.on('scrollEnd', () => {
             if (this.scroll.y <= (this.scroll.maxScrollY + 50)) {
               this.$emit('scrollToEnd')
@@ -72,6 +76,14 @@
         if (this.beforeScroll) {
           this.scroll.on('beforeScrollStart', () => {
             this.$emit('beforeScroll')
+          })
+        }
+        //下拉刷新时间
+        if(this.pullup){
+          this.scroll.on('scrollEnd',() =>{
+            if(this.scroll.y <= this.scroll.maxScrollY+50){
+
+            }
           })
         }
       },
@@ -89,7 +101,7 @@
       },
       scrollToElement() {
         this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
-      }
+      },
     },
     watch: {
       data() {

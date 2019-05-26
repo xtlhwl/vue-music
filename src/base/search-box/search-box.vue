@@ -29,11 +29,11 @@ export default {
         setQuery(query){
             this.query = query
         },
-        _getSearchSong(){
-            getSearchSong(this.query).then((res) =>{
-                console.log(res)
-            })
-        }
+        // _getSearchSong(){
+        //     getSearchSong(this.query).then((res) =>{
+        //         console.log(res)
+        //     })
+        // }
     },
     created(){
         this.$watch('query',(newQueary)=>{
@@ -42,9 +42,9 @@ export default {
         // this._getSearchSong()
     },
     watch:{
-        query(){
-            this._getSearchSong(this.query)
-        }
+        // query(){
+        //     this._getSearchSong(this.query)
+        // }
     }
 }
 </script>
