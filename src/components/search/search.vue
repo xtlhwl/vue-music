@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="search-result">
-            <suggest :query="query"></suggest>
+            <suggest :query="query" ></suggest>
         </div>
         <router-view></router-view>
     </div>
@@ -49,7 +49,7 @@ export default {
             })
         },
         hotkeyclick(key){
-            this.$refs.searchBox.setQuery(key)
+            
         },
         onQuerychange(query){
             this.query = query

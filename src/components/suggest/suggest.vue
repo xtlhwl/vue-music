@@ -1,6 +1,6 @@
 <template>
-    <scroll class="suggest" :data="result" :pullup="pullup" @scrollToEnd="searchMore">
-        <ul class="suggest-list">
+    <scroll  class="suggest" :data="result" :pullup="pullup" @scrollToEnd="searchMore">
+        <ul class="suggest-list" v-show="result.length">
             <li class="suggest-item" v-for="(item,index) in result" :key="index" @click="getSong(item)">
                 <div class="icon">
                     <i :class="getIconCls(item)"></i>
@@ -46,10 +46,12 @@ export default {
     },
     methods:{
         Search(){
+            this.page = 1
+            this.hasMore = true
             getSearchSong(this.query,this.page,this.showSinger).then((res) => {
                 
                 if(res.code === ERR_OK){
-                    this.hasMore = true
+                   
                     this.result = this._resultSong(res.data)
                     this._checkSong(res.data)
                 }
