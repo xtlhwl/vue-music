@@ -1,17 +1,41 @@
 <template>
     <div class="search-box">
         <i class="icon-search"></i>
-            <input class="box"  :placeholder="placeholder">
-        <i class="icon-dismiss"></i>
+            <input class="box"  :placeholder="placeholder" v-model="query">
+        <i class="icon-dismiss" v-show="query" @click="clear"></i>
     </div>
+    
 </template>
 <script>
+import {getSearch} from 'api/search'
+import {ERR_OK} from 'api/config'
 export default {
+
     props:{
         placeholder:{
             type:String,
             default:"搜索歌曲、歌手"
         }
+    },
+    data(){
+        return{
+            query:''
+        }
+    },
+    methods:{
+        clear(){
+            this.query = ''
+        },
+        _getSearch(){
+            getSearch().then((res) =>{
+                if(res.code === ERR_OK){
+                    console.log(res.data)
+                }
+        }) 
+        }
+    },
+    created(){
+        this._getSearch()
     }
 }
 </script>
