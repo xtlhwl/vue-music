@@ -1,15 +1,17 @@
 <template>
     <scroll class="suggest" :data="result" :pullup="pullup" @scrollToEnd="searchMore">
         <ul class="suggest-list">
-            <li class="suggest-item" v-for="(item,index) in result" :key="index">
+            <li class="suggest-item" v-for="(item,index) in result" :key="index" @click="getSong(item)">
                 <div class="icon">
                     <i :class="getIconCls(item)"></i>
                 </div>
-                <div class="name">
+                <div class="name" >
                     <p class="text" v-html="getDisplayName(item)"></p>
                 </div>
             </li>
+            <loading v-show="hasMore" title=""></loading>
         </ul>
+        
     </scroll>
 </template>
 <script>
@@ -17,10 +19,12 @@ import {getSearchSong} from "api/search"
 import {ERR_OK} from "api/config"
 import {createSong} from 'common/js/song'
 import Scroll from "base/scroll/scroll"
+ import Loading from 'base/loading/loading'
 
 export default {
     components:{
-        Scroll
+        Scroll,
+        Loading
     },
     props:{
         query:{
@@ -105,6 +109,9 @@ export default {
                     this._checkSong(res.data)
                 }
              })
+        },
+        getSong(item){
+            this.$router.push()
         }
     },
     watch:{
