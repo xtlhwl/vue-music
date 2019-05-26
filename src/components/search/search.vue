@@ -1,12 +1,14 @@
 <template>
     <div class="search">
-        <div class="search-box-wrapper"><search-box></search-box></div>
+        <div class="search-box-wrapper">
+            <search-box ref="searchBox"></search-box>
+        </div>
         <div class="shortcut-wrapper">
             <div class="shortcut">
                 <div class="hot-key">
                     <h1 class="title">热门搜索</h1>
                         <ul>
-                             <li @click="hotkeyclick(hotkey.n)" class="item" v-for="(hotkey,index) in HotKey" :key="index">
+                             <li @click="hotkeyclick(hotkey.k)" class="item" v-for="(hotkey,index) in HotKey" :key="index">
                                  <span>{{hotkey.k}}</span>
                              </li>
                          </ul>
@@ -14,7 +16,6 @@
             </div>
         </div>
     </div>
-    
 </template>
 <script>
 import SearchBox from  'base/search-box/search-box'
@@ -41,8 +42,8 @@ export default {
             })
         },
         hotkeyclick(key){
-            
-        }
+            this.$refs.searchBox.setQuery(key)
+        }   
     },
     created(){
         this._getHotkey()

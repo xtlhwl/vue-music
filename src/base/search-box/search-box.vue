@@ -4,10 +4,11 @@
             <input class="box"  :placeholder="placeholder" v-model="query">
         <i class="icon-dismiss" v-show="query" @click="clear"></i>
     </div>
-    
 </template>
 <script>
 import {ERR_OK} from 'api/config'
+import {getSearchSong} from 'api/search'
+
 export default {
 
     props:{
@@ -25,12 +26,25 @@ export default {
         clear(){
             this.query = ''
         },
-        
+        setQuery(query){
+            this.query = query
+        },
+        _getSearchSong(){
+            getSearchSong(this.query).then((res) =>{
+                console.log(res)
+            })
+        }
     },
     created(){
         this.$watch('query',(newQueary)=>{
             this.$emit('query',newQueary) //一开始便监听query属性，并将属性放入中央事件总线emit
         })
+        // this._getSearchSong()
+    },
+    watch:{
+        query(){
+            this._getSearchSong(this.query)
+        }
     }
 }
 </script>
