@@ -7,7 +7,6 @@
     
 </template>
 <script>
-import {getSearch} from 'api/search'
 import {ERR_OK} from 'api/config'
 export default {
 
@@ -26,16 +25,12 @@ export default {
         clear(){
             this.query = ''
         },
-        _getSearch(){
-            getSearch().then((res) =>{
-                if(res.code === ERR_OK){
-                    console.log(res.data)
-                }
-        }) 
-        }
+        
     },
     created(){
-        this._getSearch()
+        this.$watch('query',(newQueary)=>{
+            this.$emit('query',newQueary) //一开始便监听query属性，并将属性放入中央事件总线emit
+        })
     }
 }
 </script>
