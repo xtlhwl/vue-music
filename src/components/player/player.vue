@@ -77,16 +77,17 @@ export default{
       },
         ...mapGetters([
             'fullScreen',
-            'playlist',
+            'playlist', //播放列表，如果播放列表突然发生改变，便将play的v-show设置为true
             'currentSong',
             'playing'
         ])
     },
     methods:{
+      //点击到mini播放器
       backsamll(){
         this.setFullScreen(false)
-        console.log("执行back")
       },
+      //点击到fullscreen播放器
       backGreat(){
         this.setFullScreen(true) 
       },

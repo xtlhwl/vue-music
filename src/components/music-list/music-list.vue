@@ -32,6 +32,9 @@
  import {prefixStyle} from 'common/js/dom'
  import Loading from 'base/loading/loading'
  import {mapActions} from 'vuex'
+ import {getVkey} from 'api/song'
+ import {ERR_OK} from 'api/config'
+ import {getSongUrl} from 'common/js/song'
 
  let transform = prefixStyle('transform')
  let filter = prefixStyle('backdrop-filter')
@@ -57,21 +60,37 @@
         }
     },
     methods:{
+      //返回上一页
         backpage(){
           window.history.go(-1)
         },
+        //scroll组件传递到当前的y值当中
         scroll(pos){
           this.scrollY = pos.y
         },
+        //点击歌曲列表，将歌曲数据传入vuex中的actions中，并将fullscreen
         selectItem(item,index){
+          const Item = item.mid
+          this._getVkey(Item)
             this.selectPlay({
               list:this.songs,
               index
-              })
+              }) 
+        },
+        _getVkey(item){
+          getVkey(item).then((res) =>{
+            if(res.code === ERR_OK){
+               this.PlayAddress = res.data.items[0].vkey
+               
+            }
+          }).then((re) =>{
+              this.URL = getSongUrl(item,this.PlayAddress)
+          })
         },
         randomPlay(){
 
         },
+        //获取vuex中selectPlay事件
         ...mapActions([
           'selectPlay'
         ])
@@ -116,7 +135,9 @@
       },
       data(){
         return{
-          scrollY:0
+          scrollY:0,
+          PlayAddress:'',
+          URL:''
         }
       },
       computed:{

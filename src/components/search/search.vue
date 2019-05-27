@@ -8,7 +8,7 @@
                 <div class="hot-key">
                     <h1 class="title">热门搜索</h1>
                         <ul>
-                             <li @click="hotkeyclick(hotkey.k)" class="item" v-for="(hotkey,index) in HotKey" :key="index">
+                             <li class="item" v-for="(hotkey,index) in HotKey" :key="index" @click="keyclick(hotkey.k)" >
                                  <span>{{hotkey.k}}</span>
                              </li>
                          </ul>
@@ -38,21 +38,22 @@ export default {
         }
     },
     methods:{
+        keyclick(key){
+            console.log(key)
+            this.$refs.searchBox.setQuery(key)
+        },
         _getHotkey(){
             getHotkey().then((res) => {
                 if(res.code === ERR_OK){
                     this.HotKey = res.data.hotkey.slice(0,10)
-                    console.log(this.HotKey)
                 }
             }).catch((err) => {
                 console.log("未获取到搜索热词")
             })
         },
-        hotkeyclick(key){
-            
-        },
         onQuerychange(query){
-            this.query = query
+           return this.query = query
+            
         },   
     },
     
@@ -97,6 +98,7 @@ export default {
           position: relative
           margin: 0 20px
           .title
+            z-index: 80
             display: flex
             align-items: center
             height: 40px
@@ -110,7 +112,7 @@ export default {
                 font-size: $font-size-medium
                 color: $color-text-d
     .search-result
-      position: fixed
+      position: inherit
       width: 100%
       top: 178px
       bottom: 0

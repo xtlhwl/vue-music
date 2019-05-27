@@ -57,7 +57,7 @@
           probeType: this.probeType,
           click: this.click
         })
-
+        //当前的滚动值
         if (this.listenScroll) {
           let me = this
           this.scroll.on('scroll', (pos) => {

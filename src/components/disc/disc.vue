@@ -9,6 +9,7 @@ import { ERR_OK } from 'api/config'
 import {mapGetters} from 'vuex'
 import {getSongList} from 'api/recommend'
 import {createDiscSong } from 'common/js/song'
+import {getVkey} from 'api/song'
 
 export default {
     components:{
@@ -25,7 +26,6 @@ export default {
                 getSongList(this.disc.dissid).then((res) =>{
                 if(res.code === ERR_OK){
                     this.songs=this._normalsizeSongs(res.cdlist[0].songlist)
-                    console.log(this.songs)
                 }
             })
             }else{

@@ -53,3 +53,7 @@ export function createDiscSong (songmid, singer, singermid, name, ablum) {
     ablum
   )
 }
+export function getSongUrl (songmid, vkey) {
+  const url = `http://dl.stream.qqmusic.qq.com/C400${songmid}.m4a?guid=2723418030&vkey=${vkey}&uin=0&fromtag=38`
+  return url
+}
