@@ -45,10 +45,10 @@ export default {
                         if(res.code === ERR_OK){
                             this.PlayAddress = res.data.items[0].vkey
                             this.Url = getSongUrl(musicData['songmid'],this.PlayAddress)
-                           
+                            
                         }
                     })
-                     ret.push(createSong(musicData),this.Url)
+                    ret.push(createSong(musicData,this.Url)) 
                     
                  }
                 

@@ -20,7 +20,7 @@ export function createSong (musicData, url) {
     name: musicData.songname,
     album: musicData.albumname,
     duration: musicData.interval,
-    url: url | '',
+    url: `${url}`,
     image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg`
   })
 }
