@@ -12,7 +12,7 @@ export default class Song {
 }
 
 // 工厂方法
-export function createSong (musicData, songVkey) {
+export function createSong (musicData, url) {
   return new Song({
     id: musicData.songid,
     mid: musicData.songmid,
@@ -20,7 +20,7 @@ export function createSong (musicData, songVkey) {
     name: musicData.songname,
     album: musicData.albumname,
     duration: musicData.interval,
-    url: `http://223.111.154.143/amobile.music.tc.qq.com/${songVkey}`,
+    url: url | '',
     image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg`
   })
 }

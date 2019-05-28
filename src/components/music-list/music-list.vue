@@ -70,23 +70,25 @@
         },
         //点击歌曲列表，将歌曲数据传入vuex中的actions中，并将fullscreen
         selectItem(item,index){
-          const Item = item.mid
-          this._getVkey(Item)
+          // const Item = item.mid
+          // this._getVkey(Item)
             this.selectPlay({
               list:this.songs,
               index
               }) 
+              console.log(this.songs)
         },
-        _getVkey(item){
-          getVkey(item).then((res) =>{
-            if(res.code === ERR_OK){
-               this.PlayAddress = res.data.items[0].vkey
+        //获取Vkey
+        // _getVkey(item){
+        //   getVkey(item).then((res) =>{
+        //     if(res.code === ERR_OK){
+        //        this.PlayAddress = res.data.items[0].vkey
                
-            }
-          }).then((re) =>{
-              this.URL = getSongUrl(item,this.PlayAddress)
-          })
-        },
+        //     }
+        //   }).then((re) =>{
+        //       this.URL = getSongUrl(item,this.PlayAddress)
+        //   })
+        // },
         randomPlay(){
 
         },
@@ -137,7 +139,6 @@
         return{
           scrollY:0,
           PlayAddress:'',
-          URL:''
         }
       },
       computed:{

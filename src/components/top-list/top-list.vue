@@ -9,13 +9,18 @@ import {mapGetters} from 'vuex'
 import {getTopListSong} from 'api/rank'
 import {ERR_OK} from 'api/config'
 import {createSong} from 'common/js/song.js'
+import {getVkey} from 'api/song'
+import {getSongUrl} from 'common/js/song'
 export default {
     components:{
         MusicList,
     },
     data(){
         return{
-            songs:[]
+            songs:[],
+            URL: '',
+            PlayAddress:'',
+            Url:''
         }
     },
     methods:{
@@ -36,15 +41,15 @@ export default {
             list.forEach((item) => {
                 let musicData = item.data
                  if(musicData.songid && musicData.albummid){
-                    // getVkey(musicData.songmid).then((res) =>{
-                    //      if(res.code === ERR_OK){
-                    //          const svkey = res.req_0.data.midurlinfo
-                    //          const songVkey = svkey[0].purl
-                    //          const newSong = createSong(musicData,songVkey)
-                    //          ret.push(newSong)
-                    //      }
-                    //  })
-                    ret.push(createSong(musicData))
+                    getVkey(musicData['songmid']).then((res) =>{
+                        if(res.code === ERR_OK){
+                            this.PlayAddress = res.data.items[0].vkey
+                            this.Url = getSongUrl(musicData['songmid'],this.PlayAddress)
+                           
+                        }
+                    })
+                     ret.push(createSong(musicData),this.Url)
+                    
                  }
                 
             })

@@ -1,6 +1,6 @@
 <template>
     <transition>
-    <music-list :title="title" :bg-image="bgImage" :songs="songs" ></music-list>
+    <music-list :title="title" :bg-image="bgImage" :songs="songs"></music-list>
     </transition>
 </template>
 <script>
@@ -17,7 +17,7 @@ export default {
     },
     data(){
         return{
-            songs:[]
+            songs:[],
         }
     },
     methods:{
