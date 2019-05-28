@@ -47,8 +47,11 @@ export default {
                             this.Url = getSongUrl(musicData['songmid'],this.PlayAddress)
                             
                         }
+                    }).then(() =>{
+                        console.log(this.Url)
+                        ret.push(createSong(musicData,this.Url)) 
                     })
-                    ret.push(createSong(musicData,this.Url)) 
+                    
                     
                  }
                 
