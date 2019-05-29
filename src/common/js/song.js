@@ -35,23 +35,41 @@ function filtername (singer) {
   return ret.join('/')
 }
 
-export class DiscSong {
-  constructor (songmid, singer, singermid, name, ablum) {
-    this.songmid = songmid,
-    this.singer = singer,
-    this.singermid = singermid,
-    this.name = name,
-    this.ablum = ablum
-  }
-}
-export function createDiscSong (songmid, singer, singermid, name, ablum) {
-  return new DiscSong(
-    songmid,
-    singer,
-    singermid,
-    name,
-    ablum
-  )
+// export class DiscSong {
+//   constructor ({id, mid, singer, name, album, duration, image, url}) {
+//     this.id = id
+//     this.mid = mid
+//     this.singer = singer
+//     this.name = name
+//     this.ablum = album
+//     this.duration = duration
+//     this.image = image
+//     this.url = url
+//   }
+// }
+// export function createDiscSong (musicData,url) {
+//   return new Song(
+//     id: musicData.id,
+//     mid: musicData.mid,
+//     singer: filtername(musicData.singer),
+//     name: musicData.name,
+//     album: musicData.album.name,
+//     duration: musicData.interval,
+//     url: `${url}`,
+//     image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg`
+//   )
+// }
+export function createDiscSong (musicData, url) {
+  return new Song({
+    id: musicData.id,
+    mid: musicData.mid,
+    singer: filtername(musicData.singer),
+    name: musicData.name,
+    album: musicData.album.name,
+    duration: musicData.interval,
+    url: `${url}`,
+    image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.album.mid}.jpg`
+  })
 }
 export function getSongUrl (songmid, vkey) {
   const url = `http://dl.stream.qqmusic.qq.com/C400${songmid}.m4a?guid=2723418030&vkey=${vkey}&uin=0&fromtag=38`
