@@ -74,7 +74,7 @@
           // this._getVkey(Item)
         
             this.selectPlay({
-              list:this.songs,
+              list:this.songs.slice(),
               index
               }) 
         },
