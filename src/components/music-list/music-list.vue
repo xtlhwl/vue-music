@@ -72,11 +72,11 @@
         selectItem(item,index){
           // const Item = item.mid
           // this._getVkey(Item)
+        
             this.selectPlay({
               list:this.songs,
               index
               }) 
-              console.log(this.songs)
         },
         //获取Vkey
         // _getVkey(item){

@@ -76,7 +76,7 @@
                 //获取slider宽度
                 let sliderWidth = this.$refs.slider.clientWidth
                 const childernLength = this.children.length
-                console.log('轮播图数量为:'+childernLength)
+                // console.log('轮播图数量为:'+childernLength)
                 for(let i=0; i< this.children.length; i++){
                     
                     let child = this.children[i]

@@ -39,7 +39,7 @@ export default {
     },
     methods:{
         keyclick(key){
-            console.log(key)
+            // console.log(key)
             this.$refs.searchBox.setQuery(key)
         },
         _getHotkey(){

@@ -116,9 +116,7 @@ export default {
         },
         getSongOrSing(item){
             if(item.type === "singer"){
-                console.log(item)
                 const singer = new Singe({id:item.singermid,name:item.singername})
-                console.log(singer)
                 this.$router.push({
                     path:`/search/${singer.id}`
                 })

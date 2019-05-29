@@ -68,7 +68,6 @@ export default {
            getDiscList().then((res) =>{
                if(res.code === ERR_OK){
                    this.disclist = res.data.list
-                   console.log(this.disclist)
                }
            })
        },
@@ -82,7 +81,6 @@ export default {
        loadimage(){//如果轮播图撑开的话，重新加载滚动scroll事件
            if(!this.checkloaded){
                this.$refs.scroll.refresh();
-               console.log('tag', '撑开')
                this.checkloaded = true;
            }
        },

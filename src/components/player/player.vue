@@ -115,6 +115,7 @@ export default{
     watch:{
       currentSong(){
         //当歌曲列发生改变变，自动播放
+
         this.$nextTick(() =>{
           this.$refs.audio.play()
         })

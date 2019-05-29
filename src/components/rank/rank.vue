@@ -33,7 +33,6 @@ export default {
             getTopList().then((res) =>{
                 if(res.code === 0){
                     this.topList = res.data.topList
-                    console.log(this.topList)
                 }
             })
         },

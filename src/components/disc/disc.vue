@@ -41,7 +41,6 @@ export default {
             let ret = []
             list.forEach((item) => {
                 let musicData = item
-                console.log(musicData)
                 if(musicData.mid){
                     getVkey(musicData.mid).then((res) =>{
                         if(res.code === ERR_OK){
