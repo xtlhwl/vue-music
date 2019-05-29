@@ -7,14 +7,18 @@
 import {createSong} from 'common/js/song'
 import MusicList from 'components/music-list/music-list'
 import {mapGetters} from 'vuex'
-import {getSingerDetail,getVkey}  from 'api/singer'
+import {getSingerDetail}  from 'api/singer'
 import {ERR_OK} from 'api/config'
+import {getSongUrl} from 'common/js/song'
+import {getVkey} from 'api/song'
 
 
 export default {
     data(){
         return{
-            songs:[]
+            songs:[],
+            vkey:'',
+            url:''
         }
     },
     computed:{
@@ -37,7 +41,6 @@ export default {
             }
             getSingerDetail(this.singer.id).then((res) =>{
                 if(res.code === ERR_OK){
-                    
                     this.songs = this._normalsizeSongs(res.data.list)
                 }
             })
@@ -47,15 +50,15 @@ export default {
             list.forEach((item) => {
                 let {musicData} = item
                  if(musicData.songid && musicData.albummid){
-                    // getVkey(musicData.songmid).then((res) =>{
-                    //      if(res.code === ERR_OK){
-                    //          const svkey = res.req_0.data.midurlinfo
-                    //          const songVkey = svkey[0].purl
-                    //          const newSong = createSong(musicData,songVkey)
-                    //          ret.push(newSong)
-                    //      }
-                    //  })
-                    ret.push(createSong(musicData))
+                     getVkey(musicData['songmid']).then((res) =>{
+                         if(res.code === ERR_OK){
+                             this.vkey = res.data.items[0].vkey
+                             this.url = getSongUrl(musicData['songmid'],this.vkey)
+                         }
+                     }).then(() =>{
+                        ret.push(createSong(musicData,this.url))
+                     })
+                    
                  }
                 
             })

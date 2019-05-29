@@ -10,6 +10,7 @@ import {mapGetters} from 'vuex'
 import {getSongList} from 'api/recommend'
 import {createDiscSong } from 'common/js/song'
 import {getVkey} from 'api/song'
+import {getSongUrl} from 'common/js/song'
 
 export default {
     components:{
@@ -18,6 +19,8 @@ export default {
     data(){
         return{
             songs:[],
+            vkey:'',
+            url:''
         }
     },
     methods:{
@@ -25,6 +28,7 @@ export default {
             if(this.disc.dissid !== undefined){
                 getSongList(this.disc.dissid).then((res) =>{
                 if(res.code === ERR_OK){
+                    console.log(res)
                     this.songs=this._normalsizeSongs(res.cdlist[0].songlist)
                 }
             })
@@ -39,6 +43,13 @@ export default {
             list.forEach((item) => {
                 let musicData = item
                 if(musicData.mid && musicData.genre){
+                    console.log(musicData)
+                    getVkey(musicData.mid).then((res) =>{
+                        if(res.code === ERR_OK){
+                            this.vkey = res.data.items[0].vkey
+                            this.url = getSongUrl(musicData.mid,this.vkey)
+                        }
+                    })
                     ret.push(createDiscSong(
                         musicData.album.mid,
                         musicData.singer[0].name,

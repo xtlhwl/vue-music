@@ -48,7 +48,6 @@ export default {
                             
                         }
                     }).then(() =>{
-                        console.log(this.Url)
                         ret.push(createSong(musicData,this.Url)) 
                     })
                     

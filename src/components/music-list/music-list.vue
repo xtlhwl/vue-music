@@ -15,7 +15,7 @@
     </div>
     <div class="bg-layer" ref="layer"></div>
     <scroll @scroll="scroll" :data="songs" class="list" ref="list"  :probe-type="probeType" :listen-scroll="listenScroll" >
-      <div class="song-list-wrapper">
+      <div class="song-list-wrapper" v-cloak>
           <song-list  @select="selectItem" :songs="songs" :rank="rank"></song-list>
       </div>
       <div class="loading-container" v-show="!songs.length">
@@ -163,6 +163,8 @@
   @import "~common/stylus/variable"
   @import "~common/stylus/mixin"
 
+  [v-cloak]
+    display: none
   .music-list
     position: fixed
     z-index: 100
