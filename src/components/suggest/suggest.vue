@@ -1,7 +1,7 @@
 <template>
     <scroll  class="suggest" :data="result" :pullup="pullup" @scrollToEnd="searchMore">
         <ul class="suggest-list" v-show="result.length">
-            <li class="suggest-item" v-for="(item,index) in result" :key="index" @click="getSongOrSing(item)">
+            <li class="suggest-item" v-for="(item,index) in result" :key="index" @click="getSongOrSing(item,index)">
                 <div class="icon">
                     <i :class="getIconCls(item)"></i>
                 </div>
@@ -23,6 +23,7 @@ import Singer from 'common/js/singer'
 import {mapMutations} from 'vuex'
 import {getVkey} from 'api/song'
 import {getSongUrl,createDiscSong} from 'common/js/song'
+import {mapActions} from 'vuex'
 
 
 export default {
@@ -61,7 +62,6 @@ export default {
                         const url = res.data.items[0].vkey
                         item.url = getSongUrl(item.mid,url)
                     })
-                    console.log(list)
                 })
                     this.result = list
                     this._checkSong(res.data)
@@ -82,12 +82,14 @@ export default {
             }
             return ret
         },
+        //滚动到下面加载下一行的时候出现加载图标
         _checkSong(data){
             const song =data.song
             if(!song.list.length || (song.curnum+song.curpage * 20) > song.totalnum){
                 this.hasMore = false
             }
         },
+        //更改歌手图标和歌曲的图标区别
         getIconCls(item){
             if(item.type === 'songer'){
                  return "icon-mine"
@@ -95,6 +97,7 @@ export default {
                 return "icon-music"
             }
         },
+        //区分歌手和歌曲
         getDisplayName(item){
             if(item.type === 'singer'){
                 return item.singername
@@ -126,22 +129,28 @@ export default {
                 }
              })
         },
-        getSongOrSing(item){
+        getSongOrSing(item,index){
             if(item.type === "singer"){
                 console.log(2)
-                // const singer = new Singe({id:item.singermid,name:item.singername})
-                // this.$router.push({
-                //     path:`/search/${singer.id}`
-                // })
-                // this.setSinger(singer)
+                const singer = new Singer({id:item.singermid,name:item.singername})
+                this.$router.push({
+                    path:`/search/${singer.id}`
+                })
+                this.setSinger(singer)
             }else{
-                console.log(1)
+                this.selectPlay({
+                    list:this.result,
+                    index
+                })
             }
         },
         //引入mapMutations，提交歌手数据
         ...mapMutations({
             setSinger:'SET_SINGER'
-        })
+        }),
+        ...mapActions([
+            'selectPlay'
+        ])
     },
     watch:{
         query(){
