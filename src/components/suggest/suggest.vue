@@ -19,8 +19,11 @@ import {ERR_OK} from "api/config"
 import {createSong} from 'common/js/song'
 import Scroll from "base/scroll/scroll"
  import Loading from 'base/loading/loading'
-import Singe from 'common/js/singer'
+import Singer from 'common/js/singer'
 import {mapMutations} from 'vuex'
+import {getVkey} from 'api/song'
+import {getSongUrl,createDiscSong} from 'common/js/song'
+
 
 export default {
     components:{
@@ -42,7 +45,7 @@ export default {
             page:1,
             result:[],
             pullup:true,
-            hasMore:true
+            hasMore:true,
         }
     },
     methods:{
@@ -51,21 +54,29 @@ export default {
             this.page = 1
             this.hasMore = true
             getSearchSong(this.query,this.page,this.showSinger).then((res) => {
-                
                 if(res.code === ERR_OK){
-                    this.result = this._resultSong(res.data)
+                   const list = this._resultSong(res.data)
+                   list.forEach((item) =>{
+                    getVkey(item.mid).then((res) =>{
+                        const url = res.data.items[0].vkey
+                        item.url = getSongUrl(item.mid,url)
+                    })
+                    console.log(list)
+                })
+                    this.result = list
                     this._checkSong(res.data)
                 }
             }).catch((err) => {
                 console.log("获取错误")
             });
         },
+        //处理搜索的列表，有zhida添加type:singer
         _resultSong(data){
             let ret = []
             if(data.zhida && data.zhida.singerid){
                 ret.push({...data.zhida,...{type:"singer"}})
             }
-            
+            //没有的变化直接添加进列表
             if(data.song){
                 ret = ret.concat(this._normalsizeSongs(data.song.list))
             }
@@ -79,7 +90,7 @@ export default {
         },
         getIconCls(item){
             if(item.type === 'songer'){
-                 return "icon-main"
+                 return "icon-mine"
             }else{
                 return "icon-music"
             }
@@ -91,6 +102,7 @@ export default {
                 return `${item.name}-${item.singer}`
             }
         },
+        //处理歌曲列表数据，并获取url
         _normalsizeSongs(list){
             let ret = []
             list.forEach((item) => {
@@ -116,13 +128,14 @@ export default {
         },
         getSongOrSing(item){
             if(item.type === "singer"){
-                const singer = new Singe({id:item.singermid,name:item.singername})
-                this.$router.push({
-                    path:`/search/${singer.id}`
-                })
-                this.setSinger(singer)
+                console.log(2)
+                // const singer = new Singe({id:item.singermid,name:item.singername})
+                // this.$router.push({
+                //     path:`/search/${singer.id}`
+                // })
+                // this.setSinger(singer)
             }else{
-                
+                console.log(1)
             }
         },
         //引入mapMutations，提交歌手数据
@@ -156,6 +169,7 @@ export default {
         [class^="icon-"]
           font-size: 14px
           color: $color-text-d
+
       .name
         flex: 1
         font-size: $font-size-medium
