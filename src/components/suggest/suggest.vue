@@ -143,6 +143,7 @@ export default {
                     index
                 })
             }
+            this.$emit('select')
         },
         //引入mapMutations，提交歌手数据
         ...mapMutations({

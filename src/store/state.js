@@ -9,6 +9,7 @@ const state = {
   mode: playmode.sequence,
   currentIndex: -1, // 当前播放索引
   disc: {},
-  toplist: {}
+  toplist: {},
+  searchHistory: []
 }
 export default state

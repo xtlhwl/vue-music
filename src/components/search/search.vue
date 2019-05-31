@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="search-result">
-            <suggest :query="query" ></suggest>
+            <suggest :query="query" @select="saveSelect"></suggest>
         </div>
         <router-view></router-view>
     </div>
@@ -26,6 +26,7 @@ import SearchBox from  'base/search-box/search-box'
 import {getHotkey} from 'api/search'
 import {ERR_OK} from 'api/config'
 import Suggest from 'components/suggest/suggest'
+import {mapMutations} from 'vuex'
 export default {
     components:{
         SearchBox,
@@ -55,7 +56,13 @@ export default {
            return this.query = query
             
         },   
-    },
+        saveSelect(){
+            
+        },
+        ...mapMutations([
+            'SET_SEARCH_HISTORY'
+        ])
+     },
     
     created(){
         this._getHotkey()
