@@ -144,6 +144,7 @@ export default {
                 })
             }
             this.$emit('select')
+            console.log(this.setSinger)
         },
         //引入mapMutations，提交歌手数据
         ...mapMutations({
