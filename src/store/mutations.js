@@ -1,5 +1,5 @@
 import * as type from './mutation-types'
-import { stat } from 'fs';
+import { stat } from 'fs'
 // mutation是唯一可以更改vuex的store的地方
 const matutaions = {
   // 将singer写入state当中
@@ -29,8 +29,8 @@ const matutaions = {
   },
   [type.SET_TOP_LIST] (state, toplist) {
     state.toplist = toplist
-  }
-  [type.SET_SEARCH_HISTORY] (state,history){
+  },
+  [type.SET_SEARCH_HISTORY] (state, history) {
     state.searchHistory = history
   }
 }
