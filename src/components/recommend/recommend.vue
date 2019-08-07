@@ -3,7 +3,7 @@
         <!-- 传入data数据，在scroll中有watch事件监听data数据，data发生改变，会执行refresh()-->
         <scroll ref="scroll" class="recommend-content" :data="disclist">
             <div>
-                <div v-if="recommends.length" class="slider-wrapper"> 
+                <div v-if="recommends.length" class="slider-wrapper">
                     <slider>
                         <div v-for="(item,index) in recommends" :key="index" >
                             <a :href="item.linkUrl">
@@ -18,7 +18,7 @@
                         <li  @click="selectItem(item)" v-for="(item,index) in disclist" :key="index" class="item">
                             <div class="icon">
                                 <!-- 用懒加载加载图片 -->
-                                <img v-lazy="item.imgurl" width="60px" height="60px"> 
+                                <img v-lazy="item.imgurl" width="60px" height="60px">
                             </div>
                             <div class="text">
                                 <h2 class="name" v-html="item.creator.name"></h2>
@@ -34,74 +34,73 @@
         </scroll>
         <router-view></router-view>
     </div>
-    
+
 </template>
 <script>
 // import  { getRecommend } from 'api/recommend'
 import { getDiscList, getRecommend } from 'api/recommend'
-import { ERR_OK }  from 'api/config'
+import { ERR_OK } from 'api/config'
 import Slider from 'base/slider/slider'
 import Scroll from 'base/scroll/scroll'
 import Loading from 'base/loading/loading'
 // import { getDisc } from 'api/disc'
 import {mapMutations} from 'vuex'
 
-
 export default {
-    data(){
-        return {
-            recommends: [],
-            disclist: [],
-            songerlist:[],
-        }
-    },
-    methods:{
-        _getRecommend() {
-            getRecommend().then((res) =>{
-                if(res.code === ERR_OK){
-                    this.recommends = res.data.slider;
-                    // console.log('this.recommend', this.recommends)
-                }
-            })
-        },
-       _getDiscList() {
-           getDiscList().then((res) =>{
-               if(res.code === ERR_OK){
-                   this.disclist = res.data.list
-               }
-           })
-       },
-       selectItem(item){
-           this.$router.push({
-               path: `/recommend/${item.dissid}`
-           })
-           this.setDisc(item)
-       },
-       
-       loadimage(){//如果轮播图撑开的话，重新加载滚动scroll事件
-           if(!this.checkloaded){
-               this.$refs.scroll.refresh();
-               this.checkloaded = true;
-           }
-       },
-       ...mapMutations({
-           setDisc:'SET_DISC'
-       })
-
-    },
-    created() {
-        this._getRecommend()
-        this._getDiscList()
-        // setTimeout(() => {
-        //     this._getDiscList()   //加载图标测试
-        // }, 1000);
-    },
-
-    components:{
-        Slider,
-        Scroll,
-        Loading,
+  data () {
+    return {
+      recommends: [],
+      disclist: [],
+      songerlist: []
     }
+  },
+  methods: {
+    _getRecommend () {
+      getRecommend().then((res) => {
+        if (res.code === ERR_OK) {
+          this.recommends = res.data.slider
+          // console.log('this.recommend', this.recommends)
+        }
+      })
+    },
+    _getDiscList () {
+      getDiscList().then((res) => {
+        if (res.code === ERR_OK) {
+          this.disclist = res.data.list
+        }
+      })
+    },
+    selectItem (item) {
+      this.$router.push({
+        path: `/recommend/${item.dissid}`
+      })
+      this.setDisc(item)
+    },
+
+    loadimage () { // 如果轮播图撑开的话，重新加载滚动scroll事件
+      if (!this.checkloaded) {
+        this.$refs.scroll.refresh()
+        this.checkloaded = true
+      }
+    },
+    ...mapMutations({
+      setDisc: 'SET_DISC'
+    })
+
+  },
+  created () {
+    this._getRecommend()
+    this._getDiscList()
+    // setTimeout(() => {
+    //     this._getDiscList()   //加载图标测试
+    // }, 1000);
+  },
+
+  components: {
+    Slider,
+    Scroll,
+    Loading
+  }
 }
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
